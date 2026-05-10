@@ -1,0 +1,15 @@
+# 基於你下載的模型版本
+FROM qwen3.6:35b-a3b-q3_K_M
+
+# 設定上下文長度為 32k，這是 3090 跑 Roo Code 的甜點位
+# 如果之後 Roo Code 報錯說 VRAM 不夠，可以改成 24576
+PARAMETER num_ctx 32768
+
+# 強制所有模型層都進 GPU (3090 很強，不用留給 CPU)
+PARAMETER num_gpu 99
+
+# 防止模型在寫長程式碼時開始「胡言亂語」重複同樣的詞
+PARAMETER repeat_penalty 1.1
+
+# 稍微降低隨機性，讓寫出來的程式碼更嚴謹
+PARAMETER temperature 0.5
